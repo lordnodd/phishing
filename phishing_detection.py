@@ -25,7 +25,7 @@ def getResult(url):
     X_new = []
 
     X_input = url
-    X_new=feature_extraction.generate_data_set(X_input)
+    X_new = feature_extraction.generate_data_set(X_input)
     X_new = np.array(X_new).reshape(1,-1)
 
     try:

@@ -39,7 +39,7 @@ def generate_data_set(url):
 	       domain = domain.replace("www.","")
 
     # Requests all the information about the domain
-    # whois_response = whois.whois(domain)
+    # whois_response = whois.query(domain)
 
     rank_checker_response = requests.post("https://www.checkpagerank.net/index.php", {
         "name": domain
@@ -354,7 +354,7 @@ def generate_data_set(url):
     #25. DNSRecord
     dns = 1
     try:
-        d = whois.whois(domain)
+        dns = whois.whois(domain)
     except:
         dns=-1
     if dns == -1:
