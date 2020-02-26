@@ -39,7 +39,8 @@ def generate_data_set(url):
 	       domain = domain.replace("www.","")
 
     # Requests all the information about the domain
-    # whois_response = whois.query(domain)
+    whois_response = whois.query(domain)
+    print(whois_response)
 
     rank_checker_response = requests.post("https://www.checkpagerank.net/index.php", {
         "name": domain
@@ -114,21 +115,20 @@ def generate_data_set(url):
         data_set.append(-1)
 
     # 9.Domain_registeration_length
-    # expiration_date = whois_response.expiration_date
-    # registration_length = 0
-    # try:
-    #     expiration_date = min(expiration_date)
-    #     today = time.strftime('%Y-%m-%d')
-    #     today = datetime.strptime(today, '%Y-%m-%d')
-    #     registration_length = abs((expiration_date - today).days)
+    expiration_date = whois_response.expiration_date
+    registration_length = 0
+    try:
+        expiration_date = min(expiration_date)
+        today = time.strftime('%Y-%m-%d')
+        today = datetime.strptime(today, '%Y-%m-%d')
+        registration_length = abs((expiration_date - today).days)
 
-    #     if registration_length / 365 <= 1:
-    #         data_set.append(-1)
-    #     else:
-    #         data_set.append(1)
-    # except:
-    #     data_set.append(-1)
-    data_set.append(1)
+        if registration_length / 365 <= 1:
+            data_set.append(-1)
+        else:
+            data_set.append(1)
+    except:
+        data_set.append(-1)
     # 10.Favicon
     if soup == -999:
         data_set.append(-1)
@@ -344,6 +344,7 @@ def generate_data_set(url):
     else:
         try:
             registration_date = re.findall(r'Registration Date:</div><div class="df-value">([^<]+)</div>', whois_response.text)[0]
+
             if diff_month(date.today(), date_parse(registration_date)) >= 6:
                 data_set.append(-1)
             else:
