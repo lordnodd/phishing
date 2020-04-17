@@ -2,8 +2,8 @@ import numpy as np
 import feature_extraction
 from sklearn.ensemble import RandomForestClassifier as rfc
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LogisticRegression as lr
 from flask import jsonify
+import joblib
 
 
 def getResult(url):
